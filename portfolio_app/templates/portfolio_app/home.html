@@ -1,0 +1,80 @@
+<!-- portfolio_app/templates/portfolio_app/home.html -->
+
+{% extends 'portfolio_app/base.html' %}
+{% load static %}
+{% block content %}
+    {% if messages %}
+        {% for message in messages %}
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        {% endfor %}
+    {% endif %}
+
+    <!-- Seção "Quem Sou Eu" -->
+    <div class="container my-5">
+        <div class="about-me-section">
+            <div class="row align-itens-center">
+                <div class="col-md-4 text-center">
+                    <img src="{% static 'media/profile/Foto_de_Perfil.jpg' %}" alt="Foto de Carlos Felipe" class="img-fluid rounded-circle about-me-photo" style="max-width: 200px;">
+                    <!-- Ou use uma URL temporária: <img src="https://via.placeholder.com/200" alt="Foto de Carlos Felipe" class="img-fluid rounded-circle"> -->
+                </div>
+                <div class="col-md-8">
+                    <h2 class="about-me-title mb-3">Quem Sou Eu</h2>
+                    <p class="about-me-text lead">Olá! Meu nome é Carlos Felipe, sou um desenvolvedor web apaixonado por criar soluções inovadoras com Django, Python e Power BI e outras tecnologias. Tenho experiência em projetos de portfólio, e-commerce e sistemas personalizados. Gosto de aprender continuamente e enfrentar novos desafios na área de tecnologia.</p>
+                    <p class="about-me-text">Você pode me contatar através da seção <a href="{% url 'contact_create' %}" class="text-primary">Fale Conosco</a> para discutir ideias ou colaborações!</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Seção de Skills -->
+    <div class="skills-section py-5">
+        <h2 class="text-center mb-4" style="font-family: 'Montserrat', sans-serif; font-weight: 700; color: var(--text-dark);">Minhas Habilidades</h2>
+        <div class="row">
+            {% for skill in skills %}
+            <div class="col-md-4 mb-4">
+                <div class="skill-card text-center p-3" style="background-color: var(--bg-light); border-radius: 15px; box-shadow: var(--card-shadow); transition: transform 0.3s ease, box-shadow 0.3s ease;">
+                    <img src="{{ skill.image.url }}" alt="{{ skill.title }}" class="img-fluid mb-2" style="max-height: 100px; object-fit: contain;">
+                    <h4 style="font-family: 'Montserrat', sans-serif; font-weight: 600; color: var(--text-dark);">{{ skill.title }}</h4>
+                    <div class="progress mt-2">
+                        <div class="progress-bar" role="progressbar" style="width: {{ skill.percentage }}%; background-color: var(--primary-color);" aria-valuenow="{{ skill.percentage }}" aria-valuemin="0" aria-valuemax="100">{{ skill.percentage }}%</div>
+                    </div>
+                </div>
+            </div>
+            {% empty %}
+            <p class="text-center">Nenhuma skill cadastrada ainda.</p>
+            {% endfor %}
+        </div>
+    </div>
+
+
+
+
+    <!-- Seção de Projetos -->
+    <div id="projects" class="projects-section py-5">
+        <h2 class="text-center mb-4" style="font-family: 'Montserrat', sans-serif; font-weight: 700; color: var(--text-dark);">Meus Projetos</h2>
+        <div class="row">
+            {% if projects %}
+            {% for project in projects %}
+            <div class="col-md-4 mb-4">
+                <div class="project-card">
+                    <img src="{{ project.image.url }}" class="card-img-top" alt="{{ project.title }}">
+                    <div class="card-body">
+                        <h5 class="card-title" style="font-family: 'Montserrat', sans-serif; font-weight: 600; color: var(--text-dark);">{{ project.title }}</h5>
+                        <p class="card-text" style="font-family: 'Open Sans', sans-serif; color: var(--text-light);">{{ project.description }}</p>
+                        <a href="{{ project.url }}" class="btn btn-primary" target="_blank">Ver Projeto</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            {% else %}
+            <p class="text-center">Nenhum projeto cadastrado ainda.</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+
+
+{% endblock %}
